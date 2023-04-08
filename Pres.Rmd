@@ -3,6 +3,11 @@ title: "Playing with the Central Limit Theorem"
 author: "Rithvik"
 date: "`r Sys.Date()`"
 output: slidy_presentation
+framework   : io2012 
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax, quiz, bootstrap] # {mathjax, quiz, bootstrap}
+mode        : selfcontained
 ---
 
 ```{r setup, include=FALSE}
@@ -69,7 +74,7 @@ ggplotly(g)
 
 We sample out 1000 sets of 40 replicates each (i.e. 40 \* 1000 samples) from an exponential distribution with $\lambda=0.2$, take the mean of each of those 40 replicates and get 1000 means.
 
-```{r simulation}
+```{r simulation, echo=TRUE}
 mns <- NULL
 replicates <- 40
 for (i in 1 : 1000) mns = c(mns, mean(rexp(replicates,lambda)))
