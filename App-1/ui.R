@@ -46,8 +46,8 @@ fluidPage(
              
         # Show a plot of the generated distribution
         mainPanel(
-          plotlyOutput("plot1"),
-          plotlyOutput("plot2"), 
+          plotOutput("plot1"),
+          plotOutput("plot2"), 
           p("This example is based on an assignment done by me in the Datascience course 'Statistical inference' on Coursera. The linked pdf can give more information and also code which is used here."),
           a(href="https://coursera-assessments.s3.amazonaws.com/assessments/1678738410615/573c8ae6-f2b4-4942-947c-874d03556571/Statistical_Inference.pdf","This is the link to the PDF"),
           p("Author: Rithvik Vinekar, date: 9 April 2023")

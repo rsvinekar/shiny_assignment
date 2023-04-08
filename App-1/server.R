@@ -8,13 +8,12 @@
 #
 
 library(shiny)
-library(plotly)
 library(ggplot2)
 
 # Define server logic required to draw a histogram
 function(input, output, session) {
   ## means theoretical sd = std error
-  output$plot1 <- renderPlotly({
+  output$plot1 <- renderPlot({
     lambda <- input$lambda
     replicates <- input$bins
     num <- input$num
@@ -46,9 +45,9 @@ function(input, output, session) {
       scale_color_manual(name = "mean", values = 
                            c(calculated = "blue", 
                              theoretical = "red"))
-    ggplotly(g)
+    g
     })
-    output$plot2 <- renderPlotly({
+    output$plot2 <- renderPlot({
       lambda <- input$lambda
       replicates <- input$bins
       num <- input$num
@@ -97,6 +96,6 @@ function(input, output, session) {
                                       th_90="green",mns_90="orange",
                                       th_95 = "darkblue", mns_95 = "darkred",
                                       th_97.5="darkgreen",mns_97.5="purple"))
-      ggplotly(g)
+      g
     })
 }
