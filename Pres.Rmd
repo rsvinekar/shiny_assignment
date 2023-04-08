@@ -1,0 +1,128 @@
+---
+title: "Playing with the Central Limit Theorem"
+author: "Rithvik"
+date: "`r Sys.Date()`"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Central Limit Theorem
+
+The Central Limit Theorem(CLT) states that if a distribution has a finite variance, the mean of a set of samples from the distribution approaches the mean of the original distribution. 
+
+It also says that the distribution of the means of the set of samples is normally distributed. 
+
+We can test this out with the exponential distribution, which has a finite variance $1/\lambda^2$
+
+## Exponential Distribution
+
+$$fx(x|\lambda)=\begin{cases}
+\lambda e^{-\lambda x} & for\,x>0\\
+0 & for\,x\leq0
+\end{cases}$$
+
+where $\lambda$ = differential rate, mean = $1/\lambda$, and variance is $1/\lambda^{2}$.
+
+```{r}
+lambda <- 0.2
+th_mean <- 1/lambda ## Theoretical mean
+th_variance <- 1/lambda^2 ## Theoretical variance
+rex <- rexp(1000,lambda)
+mns <- NULL
+replicates <- 40
+for (i in 1 : 1000) mns = c(mns, mean(rexp(replicates,lambda)))
+
+```
+```{r message=FALSE, warning=FALSE}
+library(ggplot2)
+library(plotly)
+```
+```{r expplot, fig.width=7, fig.height=3,fig.cap = "Exponential Distribution sample of n=1000, with theoretical distribution fitting", echo=FALSE}
+g <- ggplot() + geom_histogram(
+                    mapping = aes(x = rex),
+                    col="grey40", fill = "lightblue", 
+                    bins = 40 )+
+                labs(
+                    title = "Exponential Distribution rex len=1000",
+                    x = "value",
+                    y = "occurences" )+
+                stat_function(
+                          mapping = aes(), 
+                          fun = function(x) 
+                            dexp(x = x, rate = lambda)*length(rex))+
+     geom_vline(aes(xintercept=th_mean, color="theoretical"),    
+                linetype="dotted", linewidth = 0.3)+
+     geom_vline(aes(xintercept=mean(rex), color="calculated"), 
+                linetype="dotdash", linewidth = 0.3)+
+     scale_color_manual(name = "mean", values = 
+                                   c(calculated = "blue", 
+                                   theoretical = "red"))
+ggplotly(g)
+```
+
+## Distribution of means
+
+We sample out 1000 sets of 40 replicates each (i.e. 40 \* 1000 samples) from an exponential distribution with $\lambda=0.2$, take the mean of each of those 40 replicates and get 1000 means.
+
+```{r simulation}
+mns <- NULL
+replicates <- 40
+for (i in 1 : 1000) mns = c(mns, mean(rexp(replicates,lambda)))
+```
+```{r}
+mns_th_mean <- th_mean ## means theoretical mean
+mns_th_variance <- th_variance / replicates ## means theoretical variance
+mns_th_sd <- sqrt(mns_th_variance)  ## means theoretical sd = std error
+```
+
+```{r normplot,fig.cap = "Distribution of 1000 Means for 40 replicates of exponential distribution, with theoretical distribution fitting", fig.width=7, fig.height=3, echo=FALSE}
+g <- ggplot() +
+    geom_histogram(
+        mapping = aes(x = mns,y=after_stat(density)),
+                      col="grey", fill = "lightblue", 
+                      bins = replicates)+   
+        stat_function(  mapping = aes(), fun = function(x) 
+                    dnorm(x = x, mean=mns_th_mean, sd = mns_th_sd))+
+        labs(   title = "Distribution of means/40 len=1000",
+                x = "value", y = "occurences"             )+
+    geom_vline( aes(xintercept=mns_th_mean, color="th_mean"),    
+               linetype="dotted", linewidth = 0.5)+
+    geom_vline( aes(xintercept=mean(mns), color="mns_mean"),         
+               linetype="dotdash", linewidth = 0.5)+
+    geom_vline( aes(xintercept=qnorm(0.9,mean=mns_th_mean, 
+                                    sd = mns_th_sd),          
+                                    color="th_90"),
+               linetype="dotdash", linewidth = 0.5)+
+  geom_vline( aes(xintercept=qnorm(0.95,mean=mns_th_mean, 
+                                    sd = mns_th_sd),          
+                                    color="th_95"),
+               linetype="dotdash", linewidth = 0.5)+
+  geom_vline( aes(xintercept=qnorm(0.975,mean=mns_th_mean, 
+                                    sd = mns_th_sd),          
+                                    color="th_97.5"),
+               linetype="dotdash", linewidth = 0.5)+
+    geom_vline(aes(xintercept=quantile(mns,0.9), color="mns_90"),
+               linetype="dotdash", linewidth = 0.5)+
+  geom_vline(aes(xintercept=quantile(mns,0.95), color="mns_95"),
+               linetype="dotdash", linewidth = 0.5)+
+  geom_vline(aes(xintercept=quantile(mns,0.975), color="mns_97.5"),
+               linetype="dotdash", linewidth = 0.5)+
+    scale_color_manual(name = "mean and quantiles", 
+                       values = c(th_mean = "blue", mns_mean = "red",
+                                  th_90="green",mns_90="orange",
+                                  th_95 = "darkblue", mns_95 = "darkred",
+                                  th_97.5="darkgreen",mns_97.5="purple"))
+ggplotly(g)
+```
+We see a normal distribution
+
+## It's Playtime
+
+This is cool, right? Now what if we can change $\lambda$, the number of bins or replicates, and the number of samples? 
+
+The CLT doesn't always hold, especially for small number of samples. 
+
+Presenting an app which lets you play around and change these values to generate the plots. Do check it out.
