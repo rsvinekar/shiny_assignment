@@ -2,7 +2,7 @@
 title: "Playing with the Central Limit Theorem"
 author: "Rithvik"
 date: "`r Sys.Date()`"
-output: ioslides_presentation
+output: slidy_presentation
 ---
 
 ```{r setup, include=FALSE}
@@ -11,9 +11,9 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Central Limit Theorem
 
-The Central Limit Theorem(CLT) states that if a distribution has a finite variance, the mean of a set of samples from the distribution approaches the mean of the original distribution. 
+The Central Limit Theorem(CLT) states that if a distribution has a finite variance, the mean of a set of samples from the distribution approaches the mean of the original distribution.
 
-It also says that the distribution of the means of the set of samples is normally distributed. 
+It also says that the distribution of the means of the set of samples is normally distributed.
 
 We can test this out with the exponential distribution, which has a finite variance $1/\lambda^2$
 
@@ -36,10 +36,12 @@ replicates <- 40
 for (i in 1 : 1000) mns = c(mns, mean(rexp(replicates,lambda)))
 
 ```
+
 ```{r message=FALSE, warning=FALSE}
 library(ggplot2)
 library(plotly)
 ```
+
 ```{r expplot, fig.width=7, fig.height=3,fig.cap = "Exponential Distribution sample of n=1000, with theoretical distribution fitting", echo=FALSE}
 g <- ggplot() + geom_histogram(
                     mapping = aes(x = rex),
@@ -72,6 +74,7 @@ mns <- NULL
 replicates <- 40
 for (i in 1 : 1000) mns = c(mns, mean(rexp(replicates,lambda)))
 ```
+
 ```{r}
 mns_th_mean <- th_mean ## means theoretical mean
 mns_th_variance <- th_variance / replicates ## means theoretical variance
@@ -117,12 +120,15 @@ g <- ggplot() +
                                   th_97.5="darkgreen",mns_97.5="purple"))
 ggplotly(g)
 ```
+
 We see a normal distribution
 
 ## It's Playtime
 
-This is cool, right? Now what if we can change $\lambda$, the number of bins or replicates, and the number of samples? 
+This is cool, right? Now what if we can change $\lambda$, the number of bins or replicates, and the number of samples?
 
-The CLT doesn't always hold, especially for small number of samples. 
+The CLT doesn't always hold, especially for small number of samples.
 
-Presenting an app which lets you play around and change these values to generate the plots. Do check it out.
+[Presenting an app](https://84jv1j-rithvik-vinekar.shinyapps.io/App-1/ "https://84jv1j-rithvik-vinekar.shinyapps.io/App-1/") which lets you play around and change these values to generate the plots. Do check it out.
+
+And the files are all here on [Github](https://github.com/rsvinekar/shiny_assignment/ "https://github.com/rsvinekar/shiny_assignment/")

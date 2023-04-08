@@ -1,0 +1,11 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/1025994/b5ae15792a184bd6b9dece4718ed8879
+bundleId: https://api.rpubs.com/api/v1/document/1025994/b5ae15792a184bd6b9dece4718ed8879
+url: http://rpubs.com/rsvinekar/1025994
+when: 1680986217.15232
+lastSyncTime: 1680986217.15234

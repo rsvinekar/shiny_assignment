@@ -42,7 +42,11 @@ fluidPage(
             p("Then we generate a distribution of means by generating bins*samples values from the exponential distribution, and take the mean of 'bins' number of values to get 'samples' number of means"),
             p("Then we plot a histogram of the means. We should get a normal distribution according to the Central Limit Theorem"),
             
-            p("The explanation is confusing, but here's how : if bins=40 and samples = 1000, we generate 40*1000 samples, split these into 40 parts and take the mean of each part containing 40 values to get 1000 means")),
+            p("The explanation is confusing, but here's how : if bins=40 and samples = 1000, we generate 40*1000 samples, split these into 40 parts and take the mean of each part containing 40 values to get 1000 means"),
+            p("The term 'mns' refers to these mean values. The term 'th' refers to theoretical or expected quantile values"),
+            a(href="https://github.com/rsvinekar/shiny_assignment/","Github files for this app"),
+            a(href="https://rpubs.com/rsvinekar/dataproducts_assignment","Presentation for this app")
+        ),
              
         # Show a plot of the generated distribution
         mainPanel(
