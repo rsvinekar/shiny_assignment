@@ -6,7 +6,7 @@ output: slidy_presentation
 framework   : io2012 
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
-widgets     : [mathjax, quiz, bootstrap] # {mathjax, quiz, bootstrap}
+widgets     : [bootstrap] # {mathjax, quiz, bootstrap}
 mode        : selfcontained
 ---
 
